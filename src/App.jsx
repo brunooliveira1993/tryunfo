@@ -106,13 +106,74 @@ class App extends React.Component {
     }
   };
 
+  removeCard = (event) => {
+    const { saveCard } = this.state;
+    const deleteCardName = event.currentTarget.id;
+    const cardItem = saveCard.map((card) => card);
+    const itemDelete = cardItem.filter((Del) => Del.cardName === deleteCardName);
+    if (itemDelete[0].cardTrunfo === 'on') {
+      this.setState({
+        hasTrunfo: false,
+      });
+    }
+    for (let i = 0; i < saveCard.length; i += 1) {
+      if (saveCard[i].cardName === itemDelete[0].cardName) {
+        saveCard.splice(i, 1);
+      }
+    }
+    this.setState((preventState) => ({
+      saveCard: [...preventState.saveCard],
+    }));
+    // console.log(this.state);
+  };
+
   render() {
     const { saveCard } = this.state;
+    // const { nameSearch } = this.state;
 
-    const saveCardRender = saveCard.map((car) => (<Card
-      key={ car.cardName }
-      { ...car }
-    />));
+    const saveCardRender = saveCard.map((car) => (
+      <div
+        key={ car.cardName }
+      >
+        <Card
+          key={ car.cardName }
+          { ...car }
+        />
+        <button
+          id={ car.cardName }
+          type="submit"
+          data-testid="delete-button"
+          onClick={ this.removeCard }
+        >
+          Excluir
+        </button>
+      </div>
+    ));
+
+    // const nameFilter = saveCard.filter((card) => {
+    //   const { cardName } =
+    //   const cardName = card.cardName;
+    //   return cardName.includes(nameSearch);
+    // });
+
+    // const saveCardRender = nameFilter.map((car) => (
+    //   <div
+    //     key={car.cardName}
+    //   >
+    //     <Card
+    //       key={car.cardName}
+    //       {...car}
+    //     />
+    //     <button
+    //       id={car.cardName}
+    //       type="submit"
+    //       data-testid="delete-button"
+    //       onClick={this.removeCard}
+    //     >
+    //       Excluir
+    //     </button>
+    //   </div>
+    // ));
 
     return (
       <div>
@@ -124,6 +185,8 @@ class App extends React.Component {
         />
         <Card { ...this.state } />
         <h2>Todas as Cartas</h2>
+        <h3>Filtro de Busca</h3>
+        {/* <input type="text" data-testid="name-filter" nameSearch={ this.state.cardName } /> */}
         {saveCardRender}
       </div>
     );
