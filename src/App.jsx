@@ -59,13 +59,30 @@ class App extends React.Component {
     });
   }
 
-  onSaveButtonClick = () => { };
+  onSaveButtonClick = () => {
+    this.setState({
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: '',
+      cardTrunfo: false,
+      hasTrunfo: false,
+      isSaveButtonDisabled: true,
+    });
+  };
 
   render() {
     return (
       <div>
         <h1>Tryunfo</h1>
-        <Form onInputChange={ this.onInputChange } { ...this.state } />
+        <Form
+          onInputChange={ this.onInputChange }
+          { ...this.state }
+          onSaveButtonClick={ this.onSaveButtonClick }
+        />
         <Card { ...this.state } />
       </div>
     );
