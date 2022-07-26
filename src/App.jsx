@@ -107,6 +107,13 @@ class App extends React.Component {
   };
 
   render() {
+    const { saveCard } = this.state;
+
+    const saveCardRender = saveCard.map((car) => (<Card
+      key={ car.cardName }
+      { ...car }
+    />));
+
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -117,7 +124,7 @@ class App extends React.Component {
         />
         <Card { ...this.state } />
         <h2>Todas as Cartas</h2>
-
+        {saveCardRender}
       </div>
     );
   }
