@@ -4,6 +4,7 @@ import Card from './components/Card';
 
 class App extends React.Component {
   state = {
+    searchRare: '',
     nameSearch: '',
     cardName: '',
     cardDescription: '',
@@ -19,9 +20,9 @@ class App extends React.Component {
   }
 
   handleChange = (event) => {
-    const { value } = event.target;
+    const { name, value } = event.target;
     this.setState({
-      nameSearch: value,
+      [name]: value,
     });
   }
 
@@ -137,32 +138,36 @@ class App extends React.Component {
   render() {
     const { saveCard } = this.state;
     const { nameSearch } = this.state;
+    const { searchRare } = this.state;
 
-    // const saveCardRender = saveCard.map((car) => (
-    //   <div
-    //     key={ car.cardName }
-    //   >
-    //     <Card
-    //       key={ car.cardName }
-    //       { ...car }
-    //     />
-    //     <button
-    //       id={ car.cardName }
-    //       type="submit"
-    //       data-testid="delete-button"
-    //       onClick={ this.removeCard }
-    //     >
-    //       Excluir
-    //     </button>
-    //   </div>
-    // ));
+    // const rareFilter = saveCard.filter((card) => {
+    //   const searchName = card.cardRare;
+    //   return searchName.includes(searchRare);
+    // });
 
-    const nameFilter = saveCard.filter((card) => {
-      const searchName = card.cardName;
-      return searchName.includes(nameSearch);
-    });
+    // const nameFilter = saveCard.filter((card) => {
+    //   const searchName = card.cardName;
+    //   return searchName.includes(nameSearch);
+    // });
 
-    const saveCardRender = nameFilter.map((car) => (
+    const filterRender = () => {
+      if (searchRare !== '') {
+        const rareFilter = saveCard.filter((card) => {
+          const rare = card.cardRare;
+          return rare === searchRare;
+        });
+        return rareFilter;
+      }
+      const nameFilter = saveCard.filter((card) => {
+        const searchName = card.cardName;
+        return searchName.includes(nameSearch);
+      });
+      return nameFilter;
+    };
+
+    const objMap = filterRender();
+
+    const saveCardRender = objMap.map((car) => (
       <div
         key={ car.cardName }
       >
@@ -193,11 +198,26 @@ class App extends React.Component {
         <h2>Todas as Cartas</h2>
         <h3>Filtro de Busca</h3>
         <input
+          placeholder="Nome da carta"
           type="text"
           data-testid="name-filter"
           onChange={ this.handleChange }
+          name="nameSearch"
           // nameSearch={ this.state.cardName }
         />
+        <br />
+        <select
+          data-testid="rare-filter"
+          placeholder="Raridade"
+          name="searchRare"
+          onChange={ this.handleChange }
+        >
+          Raridade:
+          <option value="">todas</option>
+          <option value="normal">normal</option>
+          <option value="raro">raro</option>
+          <option value="muito raro">muito raro</option>
+        </select>
         {saveCardRender}
       </div>
     );
