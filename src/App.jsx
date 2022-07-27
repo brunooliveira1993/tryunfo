@@ -4,6 +4,8 @@ import Card from './components/Card';
 
 class App extends React.Component {
   state = {
+    disable: false,
+    cardTrunfoOn: '',
     searchRare: '',
     nameSearch: '',
     cardName: '',
@@ -17,6 +19,13 @@ class App extends React.Component {
     hasTrunfo: false,
     isSaveButtonDisabled: true,
     saveCard: [],
+  }
+
+  checkFunc = (event) => {
+    const checkButton = event.target.checked;
+    this.setState({
+      disable: checkButton,
+    });
   }
 
   handleChange = (event) => {
@@ -139,26 +148,29 @@ class App extends React.Component {
     const { saveCard } = this.state;
     const { nameSearch } = this.state;
     const { searchRare } = this.state;
-
-    // const rareFilter = saveCard.filter((card) => {
-    //   const searchName = card.cardRare;
-    //   return searchName.includes(searchRare);
-    // });
-
-    // const nameFilter = saveCard.filter((card) => {
-    //   const searchName = card.cardName;
-    //   return searchName.includes(nameSearch);
-    // });
+    let { disable } = this.state;
 
     const filterRender = () => {
       if (searchRare !== '') {
         const rareFilter = saveCard.filter((card) => {
+          disable = false;
           const rare = card.cardRare;
           return rare === searchRare;
         });
         return rareFilter;
       }
+
+      if (disable === true) {
+        const trunfoFilter = saveCard.filter((card) => {
+          disable = true;
+          const trunfo = card.cardTrunfo;
+          return trunfo === 'on';
+        });
+        return trunfoFilter;
+      }
+
       const nameFilter = saveCard.filter((card) => {
+        disable = false;
         const searchName = card.cardName;
         return searchName.includes(nameSearch);
       });
@@ -198,15 +210,17 @@ class App extends React.Component {
         <h2>Todas as Cartas</h2>
         <h3>Filtro de Busca</h3>
         <input
+          disabled={ disable }
           placeholder="Nome da carta"
           type="text"
           data-testid="name-filter"
           onChange={ this.handleChange }
           name="nameSearch"
-          // nameSearch={ this.state.cardName }
+        // nameSearch={ this.state.cardName }
         />
         <br />
         <select
+          disabled={ disable }
           data-testid="rare-filter"
           placeholder="Raridade"
           name="searchRare"
@@ -218,10 +232,19 @@ class App extends React.Component {
           <option value="raro">raro</option>
           <option value="muito raro">muito raro</option>
         </select>
+        <br />
+        <label htmlFor="Super Trybe Trunfo">
+          <input
+            data-testid="trunfo-filter"
+            type="checkbox"
+            name="cardTrunfoOn"
+            onClick={ this.checkFunc }
+          />
+          Super Trunfo
+        </label>
         {saveCardRender}
       </div>
     );
   }
 }
-
 export default App;
