@@ -37,7 +37,7 @@ export default class Form extends Component {
           <label
             htmlFor="Attr01"
           >
-            Attr01:
+            Attr01
             <input
               type="number"
               data-testid="attr1-input"
@@ -93,6 +93,7 @@ export default class Form extends Component {
             onChange={ onInputChange }
           >
             Raridade:
+            <option value="">select</option>
             <option value="normal">normal</option>
             <option value="raro">raro</option>
             <option value="muito raro">muito raro</option>
@@ -110,7 +111,7 @@ export default class Form extends Component {
                       name="cardTrunfo"
                       onChange={ onInputChange }
                     />
-                    <p>Super Trybe Trunfo</p>
+                    <span>Super Trybe Trunfo</span>
                   </>
                 )
             }

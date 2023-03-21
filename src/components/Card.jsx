@@ -8,24 +8,29 @@ export default class Card extends Component {
       cardImage, cardRare, cardTrunfo } = this.props;
 
     return (
-      <div>
-        <p data-testid="name-card">
+      <div className='cardRender'>
+        <p data-testid="name-card" className='name'>
           {cardName}
         </p>
-        <img src={ cardImage } alt={ cardName } data-testid="image-card" />
-        <p data-testid="description-card">
+        <img src={cardImage} alt={cardName} data-testid="image-card" />
+        <p data-testid="description-card" className='name'>
           {cardDescription}
         </p>
-        <p data-testid="attr1-card">
-          {cardAttr1}
-        </p>
-        <p data-testid="attr2-card">
-          {cardAttr2}
-        </p>
-        <p data-testid="attr3-card">
-          {cardAttr3}
-        </p>
-        <p data-testid="rare-card">
+        <div className='atr'>
+          <p data-testid="attr1-card">
+            Attr01.............................
+            {cardAttr1}
+          </p>
+          <p data-testid="attr2-card">
+            Attr02.............................
+            {cardAttr2}
+          </p>
+          <p data-testid="attr3-card">
+            Attr03.............................
+            {cardAttr3}
+          </p>
+        </div>
+        <p data-testid="rare-card" className='raridade'>
           {cardRare}
         </p>
         {

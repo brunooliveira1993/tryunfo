@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import './index.css';
 
 class App extends React.Component {
   state = {
@@ -181,17 +182,18 @@ class App extends React.Component {
 
     const saveCardRender = objMap.map((car) => (
       <div
-        key={ car.cardName }
+        key={car.cardName}
+        // className="button"
       >
         <Card
-          key={ car.cardName }
-          { ...car }
+          key={car.cardName}
+          {...car}
         />
-        <button
-          id={ car.cardName }
+        <button className='button'
+          id={car.cardName}
           type="submit"
           data-testid="delete-button"
-          onClick={ this.removeCard }
+          onClick={this.removeCard}
         >
           Excluir
         </button>
@@ -199,50 +201,61 @@ class App extends React.Component {
     ));
 
     return (
-      <div>
+      <div className='body'>
         <h1>Tryunfo</h1>
-        <Form
-          onInputChange={ this.onInputChange }
-          { ...this.state }
-          onSaveButtonClick={ this.onSaveButtonClick }
-        />
-        <Card { ...this.state } />
+        <section>
+          <div className="form">
+            <Form
+              onInputChange={this.onInputChange}
+              {...this.state}
+              onSaveButtonClick={this.onSaveButtonClick}
+            />
+          </div>
+          <div className="card">
+            <Card {...this.state} />
+          </div>
+        </section>
         <h2>Todas as Cartas</h2>
-        <h3>Filtro de Busca</h3>
-        <input
-          disabled={ disable }
-          placeholder="Nome da carta"
-          type="text"
-          data-testid="name-filter"
-          onChange={ this.handleChange }
-          name="nameSearch"
-        // nameSearch={ this.state.cardName }
-        />
-        <br />
-        <select
-          disabled={ disable }
-          data-testid="rare-filter"
-          placeholder="Raridade"
-          name="searchRare"
-          onChange={ this.handleChange }
-        >
-          Raridade:
-          <option value="">todas</option>
-          <option value="normal">normal</option>
-          <option value="raro">raro</option>
-          <option value="muito raro">muito raro</option>
-        </select>
-        <br />
-        <label htmlFor="Super Trybe Trunfo">
-          <input
-            data-testid="trunfo-filter"
-            type="checkbox"
-            name="cardTrunfoOn"
-            onClick={ this.checkFunc }
-          />
-          Super Trunfo
-        </label>
-        {saveCardRender}
+        <section>
+          <div className="form">
+            <h3>Filtro de Busca</h3>
+            <input
+              disabled={disable}
+              placeholder="Nome da carta"
+              type="text"
+              data-testid="name-filter"
+              onChange={this.handleChange}
+              name="nameSearch"
+            />
+            <br />
+            <select
+              disabled={disable}
+              data-testid="rare-filter"
+              placeholder="Raridade"
+              name="searchRare"
+              onChange={this.handleChange}
+            >
+              Raridade:
+              <option value="">todas</option>
+              <option value="normal">normal</option>
+              <option value="raro">raro</option>
+              <option value="muito raro">muito raro</option>
+            </select>
+            <br />
+            <label htmlFor="Super Trybe Trunfo">
+              <input
+                data-testid="trunfo-filter"
+                type="checkbox"
+                name="cardTrunfoOn"
+                onClick={this.checkFunc}
+              />
+              Super Trunfo
+            </label>
+          </div>
+          <div className='cardSave'>
+            {saveCardRender}
+          </div>
+        </section>
       </div>
     );
   }
